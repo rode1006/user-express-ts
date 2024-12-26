@@ -9,21 +9,22 @@ export const authMiddleware = (
   next: NextFunction
 ) => {
   const token = req.cookies?.auth_token; // Assuming token is stored in cookies as 'token'
-  
   if (!token) {
-    return res.status(401).json({ message: "Unauthorized: No token provided" });
-  }
+    res.status(401).json({ message: "Unauthorized: No token provided" });
+  } else {
+    try {
+      const decoded = jwt.verify(token, secret) as {
+        username: string;
+        email: string;
+      }; // Verify token and extract email
 
-  try {
-    const decoded = jwt.verify(token, secret) as { username: string, email: string }; // Verify token and extract email
-    
-    req.body.username = decoded.username; // Attach email to the request body
-    req.body.email = decoded.email; // Attach email to the request body
-    next();
-    
-  } catch (err) {
-    console.error(err);
+      req.body.username = decoded.username; // Attach email to the request body
+      req.body.email = decoded.email; // Attach email to the request body
+      next();
+    } catch (err) {
+      console.error(err);
 
-    res.status(401).json({ message: "Unauthorized: Invalid token" });
+      res.status(401).json({ message: "Unauthorized: Invalid token" });
+    }
   }
 };

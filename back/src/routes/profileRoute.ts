@@ -8,6 +8,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 // Routes
+router.get("/all", ProfileController.getAll);
 router.post("/", ProfileController.create);
 router.put("/", ProfileController.update);
 router.get("/", ProfileController.get);

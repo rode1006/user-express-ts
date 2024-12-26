@@ -9,10 +9,12 @@ export interface IProfile extends Document {
   phoneNumber: string;
   gender: string;
   avatar: string;
+  email: string;  
 }
 
 const ProfileSchema: Schema = new Schema({
   username: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   fullname: { type: String, required: true },
   birth: { type: String },
   jobTitle: { type: String },

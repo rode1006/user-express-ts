@@ -46,7 +46,7 @@ class AuthController {
           res.cookie("auth_token", token, {
             httpOnly: false, // Ensures the cookie is only accessible by the server
             secure: false, // Ensure cookies are only sent over HTTPS in production
-            maxAge: 3600000, // 1 hour
+            maxAge: 3600000, // 12 hours
           });
           res.status(200).send("Login successful");
         }

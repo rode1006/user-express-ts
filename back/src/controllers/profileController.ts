@@ -5,6 +5,15 @@ import Profile from "../models/profileModel";
 class ProfileController {
   // Create or Update Profile
 
+  async getAll(req: Request, res: Response) {
+    try {
+      const profiles = await Profile.find();
+      res.status(200).json(profiles);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error", error });
+    }
+  }
+
   async create(req: Request, res: Response) {
     try {
       const {
@@ -16,6 +25,7 @@ class ProfileController {
         gender,
         avatar,
         username,
+        email
       } = req.body;
       
       if (!username) {
@@ -35,12 +45,12 @@ class ProfileController {
             gender,
             avatar,
             username,
+            email
           };
           
           const newProfile = new Profile(profileData);
           
           await newProfile.save();
-
           res.status(201).json({
             message: "Profile created successfully",
             profile: newProfile,
