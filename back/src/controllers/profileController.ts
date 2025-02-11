@@ -3,7 +3,6 @@ import { IProfile } from "../models/profileModel";
 import Profile from "../models/profileModel";
 
 class ProfileController {
-  // Create or Update Profile
 
   async getAll(req: Request, res: Response) {
     try {
